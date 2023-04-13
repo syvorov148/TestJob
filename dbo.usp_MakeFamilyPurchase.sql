@@ -4,7 +4,7 @@ AS
 	DECLARE @familyId INT =0;
 	SELECT @familyId = ID FROM dbo.Family WHERE SurName = @FamilySurName;
 	IF @familyId = 0
-		PRINT 'Такой семьи нет'
+		PRINT 'РўР°РєРѕР№ СЃРµРјСЊРё РЅРµС‚'
 	UPDATE dbo.Family
 	SET BudgetValue = (SELECT SUM(Value) FROM dbo.Basket WHERE ID_Family = @familyId )
 GO
