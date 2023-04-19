@@ -1,20 +1,27 @@
-CREATE TRIGGER TR_Basket_insert
-ON dbo.Basket
-AFTER INSERT
-AS
-  DECLARE @sku INT = 0;
-  DECLARE @sku_count INT = 0;
-  
-  SELECT @sku = ID_SKU, @sku_count = COUNT(ID_SKU)
-  FROM inserted 
-  GROUP BY ID_SKU
-  ORDER BY COUNT(ID_SKU)
+create trigger TR_Basket_insert 
+on dbo.Basket
+after insert
+as
+  declare @sku int = 0; 
+  declare @sku_count int = 0;
+  declare @date datetime;
 
-  UPDATE dbo.Basket 
-  SET DiscountValue = CASE
-      WHEN  @sku_count >= 2 THEN VALUE * 0.05
-	  ELSE VALUE * 0
-    END
- WHERE ID_SKU = @sku
+  select 
+	@sku = ID_SKU 
+	,@sku_count = count(ID_SKU)
+	,@date = PurchaseDate
+  from inserted 
+  group by 
+	ID_SKU
+	,PurchaseDate 
+  order by count(ID_SKU)
+
+  update dbo.Basket 
+  set DiscountValue = case
+      when  @sku_count >= 2 then Value * 0.05
+	  else value * 0
+    end
+ where ID_SKU = @sku 
+	and PurchaseDate >= @date 
 	
 		
