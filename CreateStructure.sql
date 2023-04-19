@@ -1,20 +1,20 @@
-CREATE TABLE dbo.SKU (
-    ID INT IDENTITY PRIMARY KEY, 
-    Name VARCHAR(255),
-    Code AS concat('s', ID)
+create table dbo.SKU (
+    ID int identity primary key  
+    ,Name varchar(255)
+    ,Code as concat('s', ID)
 );
 
-CREATE TABLE dbo.Family (
-    ID INT IDENTITY PRIMARY KEY,
-    SurName VARCHAR(255),
-    BudgetValue INT
+create table dbo.Family (
+    ID int identity primary key
+    ,SurName varchar(255)
+    ,BudgetValue int
 );
 
-CREATE TABLE dbo.Basket (
-    ID INT IDENTITY PRIMARY KEY,
-    ID_SKU INT FOREIGN KEY REFERENCES dbo.SKU(ID),
-    ID_Family INT FOREIGN KEY REFERENCES dbo.Family(ID),
-    Quantity DECIMAL CHECK (Quantity >= 0), 
-    Value INT CHECK (Value >= 0),
-    PurchaseDate datetime default GETDATE(),
-    DiscountValue DECIMAL);
+create table dbo.Basket (
+    ID int identity primary key
+    ,ID_SKU int foreign key references dbo.SKU(ID) 
+    ,ID_Family int foreign key references dbo.Family(ID)
+    ,Quantity decimal check (Quantity >= 0)
+    ,Value int check (Value >= 0)
+    ,PurchaseDate datetime default getdate()
+    ,DiscountValue decimal);
