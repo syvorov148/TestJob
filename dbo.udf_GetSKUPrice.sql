@@ -1,10 +1,10 @@
-CREATE FUNCTION dbo.ufnGetInventoryStock(@ID_SKU INT)
-RETURNS DECIMAL(18, 2)
-AS
-BEGIN
-	 DECLARE @res DECIMAL(18, 2);
-	 SELECT @res = SUM(Value) / SUM(Quantity) 
-	 FROM dbo.Basket
-	 WHERE ID_SKU = @ID_SKU;
-	 RETURN @res;
-END;
+create function dbo.ufnGetInventoryStock(@ID_SKU int) 
+returns decimal(18, 2)
+as
+begin
+	declare @res decimal(18, 2);
+	select @res = sum(Value) / sum(Quantity) 
+	from dbo.Basket
+	where ID_SKU = @ID_SKU;
+	return @res;
+end;
